@@ -9,8 +9,9 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-RUN git clone https://github.com/Angelsd2/RCDD_2026.git
 WORKDIR /workspace
 
+COPY main.py /workspace/main.py
+COPY README.md /workspace/README.md
+
 CMD ["sleep", "infinity"]
-# CMD ["python3", "RCDD_2026/main.py"]
