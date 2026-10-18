@@ -1,0 +1,36 @@
+# Dos contenedores de la misma imagen
+services:
+  servidor:
+    build: .
+    image: grpc-img
+    container_name: servidor
+    hostname: servidor
+    command: ["python3", "server.py"]
+    networks: [grpc-net]
+
+  cliente:
+    build: .
+    image: grpc-img
+    container_name: cliente1
+    hostname: cliente1
+    command: ["python3", "client.py"]
+    environment:
+      - SERVIDOR=servidor:50051
+      - CLIENTE_ID=cliente1
+    depends_on: [servidor]
+    networks: [grpc-net]
+
+  cliente2:
+    build: .
+    image: grpc-img
+    container_name: cliente2
+    hostname: cliente2
+    command: ["python3", "client.py"]
+    environment:
+      - SERVIDOR=servidor:50051
+      - CLIENTE_ID=cliente2
+    depends_on: [servidor]
+    networks: [grpc-net]
+
+networks:
+  grpc-net:
